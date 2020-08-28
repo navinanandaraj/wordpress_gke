@@ -19,3 +19,37 @@ Few key configuration settings<br/>
 7. Stackdriver Logging and Monitoring enabled<br/>
 8. Log router sink setup for streaming to datawarehouse<br/>
 
+
+### Persistent Volume
+---------------------
+Assumption that there is a Wordpress admin app for the initial setup that loads the content to a persistent disk<br/><br/>
+Create a snapshot of the persistent disk that has all the contents, plugins etc<br/>
+Create a regional persistent disk from the above snapshot. The disk would provide redundancy across 2 zones where the GKE nodes are hosted<br/>
+Create a K8s PerisistentVolume (PV) and a PersistentVolumeClaim (PVC) resource using the above disk with ReadOnlyMany accessmode. This would enable multiple pods to mount the disk as readonly. Below is a sample yaml for creating PV and PVC<br/><br/>
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv-wordpress-v1
+spec:
+  capacity:
+    storage: 500G
+  accessModes:
+    - ReadOnlyMany
+  claimRef:
+    namespace: default
+    name: pv-wordpress-claim-v1
+  gcePersistentDisk:
+    pdName: wordpress=pd-v1
+    fsType:ext4
+\--
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: pv-wordpress-claim-v1
+spec:
+  accessModes:
+    - ReadOnlyMany
+  resources:
+    requests:
+      storage: 500G
+
