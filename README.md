@@ -26,30 +26,30 @@ Assumption that there is a Wordpress admin app for the initial setup that loads 
 Create a snapshot of the persistent disk that has all the contents, plugins etc<br/>
 Create a regional persistent disk from the above snapshot. The disk would provide redundancy across 2 zones where the GKE nodes are hosted<br/>
 Create a K8s PerisistentVolume (PV) and a PersistentVolumeClaim (PVC) resource using the above disk with ReadOnlyMany accessmode. This would enable multiple pods to mount the disk as readonly. Below is a sample yaml for creating PV and PVC<br/><br/>
-apiVersion: v1
-kind: PersistentVolume
-metadata:
-  name: pv-wordpress-v1
-spec:
+apiVersion: v1<br/>
+kind: PersistentVolume<br/>
+metadata:<br/>
+  name: pv-wordpress-v1<br/>
+spec:<br/>
   capacity:
-    storage: 500G
-  accessModes:
-    - ReadOnlyMany
-  claimRef:
-    namespace: default
-    name: pv-wordpress-claim-v1
-  gcePersistentDisk:
-    pdName: wordpress=pd-v1
-    fsType:ext4
-\--
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: pv-wordpress-claim-v1
-spec:
-  accessModes:
-    - ReadOnlyMany
-  resources:
-    requests:
+    storage: 500G<br/>
+  accessModes:<br/>
+    - ReadOnlyMany<br/>
+  claimRef:<br/>
+    namespace: default<br/>
+    name: pv-wordpress-claim-v1<br/>
+  gcePersistentDisk:<br/>
+    pdName: wordpress=pd-v1<br/>
+    fsType:ext4<br/>
+\--<br/>
+apiVersion: v1<br/>
+kind: PersistentVolumeClaim<br/>
+metadata:<br/>
+  name: pv-wordpress-claim-v1<br/>
+spec:<br/>
+  accessModes:<br/>
+    - ReadOnlyMany<br/>
+  resources:<br/>
+    requests:<br/>
       storage: 500G
 
