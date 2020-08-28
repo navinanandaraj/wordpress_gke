@@ -11,7 +11,7 @@ gcloud beta container --project "micro-shoreline-220414" clusters create "gke-cl
 
 Few key configuration settings<br/>
 1. Private GKE cluster<br/>
-2. Aias IP ranges enabled for Pods and service CIDRs<br/>
+2. Alias IP ranges enabled for Pods and service CIDRs<br/>
 3. Master Authorized networks to a /28 subnet in the VPC<br/>
 4. Auto upgrade with 4 hour maintenance window<br/>
 5. Cluster Autoscaling enabled<br/>
