@@ -61,7 +61,7 @@ Setup a Cloud SQL instance in asia-northeast1 for the dynamic content. Since the
 
 ### WP deployment 
 -----------------
-We’ll be using a base WP image from docker image. The DockerFile would include any custom changes on top of the bas image and maintained in a version control like GIT. There will be a CICD process to build a new docker image and push it to the project GCR for any WP version changes.
+We’ll be using a base WP image from docker hub. The DockerFile would include any custom changes on top of the base image maintained in a version control like GIT. There will be a CICD process to build a new docker image and push it to the project GCR for any WP version changes.
 
 
 ### WP content changes
