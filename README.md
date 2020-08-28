@@ -53,3 +53,18 @@ spec:<br/>
     requests:<br/>
       storage: 500G
 
+
+### Cloud SQL
+-------------
+Setup a Cloud SQL instance in asia-northeast1 for the dynamic content. Since the DB usage is rare, we are ok with 1 CloudSQL instance in 1 region
+
+
+### WP deployment 
+-----------------
+We’ll be using a base WP image from docker image. The DockerFile would include any custom changes on top of the bas image and maintained in a version control like GIT. There will be a CICD process to build a new docker image and push it to the project GCR for any WP version changes.
+
+
+### WP content changes
+----------------------
+A separate PD for admin changes. Any content changes done through the WP admin app will be persisted to this disk. For making the new content available to the customers, we will create a new snapshot version of this disk. A new regional persistent disk (v2) will be created using this snapshot, followed by creating a v2 version of the PV and PV claim. The pod yaml will refer to this PV claim for the new deployment. The deployment can either be a blue/green or a rolling update. B/G is preferred.
+
